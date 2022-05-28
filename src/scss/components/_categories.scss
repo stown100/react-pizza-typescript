@@ -29,3 +29,27 @@
     }
   }
 }
+
+@media (min-width: 320px) and (max-width: 1300px) {
+  .categories {
+    ul {
+      margin-bottom: 30px
+    }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 1000px) {
+  .categories {
+    width: 100%;
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(185.53px, max-content));
+      justify-content: center;
+      row-gap: 20px;
+    }
+    li {
+      width: 185.53px;
+    }
+  }
+}

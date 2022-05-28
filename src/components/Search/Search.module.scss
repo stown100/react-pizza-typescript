@@ -1,0 +1,18 @@
+.root {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 25px;
+    width: 300px;
+    border-radius: 12px;
+    font-size: 16px;
+    background-image: url('../../assets/img/magnifying-glass.png');
+    background-repeat: no-repeat;
+    align-items: center;
+    justify-content: center;
+    background-position: 2% 50%;
+    transition: all 0.15s ease-in-out;
+
+    &:focus {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        width: 400px;
+    }
+}
