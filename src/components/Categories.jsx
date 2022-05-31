@@ -1,7 +1,6 @@
 import React from "react";
 
-function Categories({ catIndex, onClickCategory }) {
-
+function Categories({ categoryId, onClickCategory }) {
   const categories = [
     "Все",
     "Мясные",
@@ -16,7 +15,7 @@ function Categories({ catIndex, onClickCategory }) {
       <ul>
         {categories.map((item, index) => (
           <li
-            className={catIndex === index ? "active" : ""}
+            className={categoryId === index ? "active" : ""}
             onClick={() => onClickCategory(index)}
             key={`${item}+${index}`}
           >

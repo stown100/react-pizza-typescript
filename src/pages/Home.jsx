@@ -8,27 +8,26 @@ import Pagination from "../components/Pagination";
 function Home({
   items,
   isLoading,
-  catIndex,
-  setCatIndex,
-  sortIndex,
-  setSortIndex,
+  categoryId,
+  sort,
   pizzas,
   setCurrentPage,
+  openPopup,
+  setOpenPopup,
+  handleSortItems,
+  onClickCategory
 }) {
-  //При клике выбирается категория
-  const onClickCategory = (index) => {
-    setCatIndex(index);
-  };
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          catIndex={catIndex}
-          setCatIndex={setCatIndex}
-          onClickCategory={onClickCategory}
+        <Categories categoryId={categoryId} onClickCategory={onClickCategory} />
+        <Sort
+          sort={sort}
+          openPopup={openPopup}
+          setOpenPopup={setOpenPopup}
+          handleSortItems={handleSortItems}
         />
-        <Sort sortIndex={sortIndex} setSortIndex={setSortIndex} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -37,7 +36,10 @@ function Home({
           ? [...new Array(12)].map(() => <Preloader key={Math.random()} />)
           : pizzas.map((obj) => <PizzaBlock {...obj} key={obj.id} />)}
       </div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} pizzas={pizzas} />
+      <Pagination
+        onChangePage={(number) => setCurrentPage(number)}
+        pizzas={pizzas}
+      />
     </div>
   );
 }
