@@ -1,13 +1,19 @@
-import React from 'react';
-import { SearchContext } from '../../App';
-import style from './Search.module.scss'
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearch } from "../../redux/slices/searchSlice";
+import style from "./Search.module.scss";
 
 function Search() {
-  // Достаю переменные из контекста
-  const { searchValue, setSearchValue } = React.useContext(SearchContext)
+  const { search } = useSelector((state) => state.searchReducer);
+  const dispatch = useDispatch();
   return (
-    <input onChange={e => setSearchValue(e.target.value)} value={searchValue} className={style.root} placeholder='поиск пиццы...' />
-  )
+    <input
+      onChange={(e) => dispatch(setSearch(e.target.value))}
+      value={search}
+      className={style.root}
+      placeholder="поиск пиццы..."
+    />
+  );
 }
 
-export default Search
+export default Search;

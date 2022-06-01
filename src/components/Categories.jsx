@@ -1,6 +1,10 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCategoryId } from "../redux/slices/filterSlice";
 
-function Categories({ categoryId, onClickCategory }) {
+
+
+function Categories() {
   const categories = [
     "Все",
     "Мясные",
@@ -9,6 +13,14 @@ function Categories({ categoryId, onClickCategory }) {
     "Острые",
     "Закрытые",
   ];
+  const dispatch = useDispatch()
+  const { categoryId } = useSelector((state) => state.filterReducer);
+
+    //При клике выбирается категория
+    const onClickCategory = (index) => {
+      dispatch(setCategoryId(index));
+    };
+
 
   return (
     <div className="categories">

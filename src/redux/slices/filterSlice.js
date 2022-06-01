@@ -7,6 +7,7 @@ export const initialState = {
     name: "популярности",
     sort: "rating",
   },
+  searchPizza: "",
 };
 
 // Функция фильтрации и сортировки данных
@@ -21,11 +22,15 @@ export const filterSlice = createSlice({
     // сортировка
     setSort(state, action) {
         state.sort = action.payload
-    }
+    },
+    setSearch(state, action) {
+        console.log(action)
+        state.searchPizza = action.payload
+    },
   },
 });
 
 // Вытакскиваю методы из filterSlice
-export const { setCategoryId, setSort } = filterSlice.actions;
+export const { setCategoryId, setSort, setSearch } = filterSlice.actions;
 
 export default filterSlice.reducer;

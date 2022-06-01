@@ -1,17 +1,24 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSort } from "../redux/slices/filterSlice";
 
-function Sort({
-  sort,
-  handleSortItems,
-  openPopup,
-  setOpenPopup,
-}) {
+function Sort() {
   const listSort = [
     { name: "от самой популярной", sort: "rating" },
     { name: "от самой дорогой", sort: "price" },
     { name: "от самой дешёвой", sort: "-price" },
     { name: "алфавиту", sort: "title" },
   ];
+  const [openPopup, setOpenPopup] = React.useState(false);
+  const { sort } = useSelector((state) => state.filterReducer);
+
+  const dispatch = useDispatch();
+
+  // Функция сортировки
+  const handleSortItems = (obj) => {
+    dispatch(setSort(obj));
+    setOpenPopup(!openPopup);
+  };
 
   return (
     <div className="sort">
