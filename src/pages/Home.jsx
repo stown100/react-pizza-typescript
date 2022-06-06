@@ -1,6 +1,6 @@
 import React from "react";
 import Categories from "../components/Categories";
-import Sort from "../components/Sort";
+import { Sort } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Preloader from "../components/Preloader/Preloader";
 import Pagination from "../components/Pagination";

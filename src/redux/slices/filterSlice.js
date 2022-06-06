@@ -4,33 +4,46 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   categoryId: 0,
   sort: {
-    name: "популярности",
-    sort: "rating",
+    name: "от самой популярной",
+    sortProperty: "rating",
   },
-  searchPizza: "",
+  search: "",
+  currentPage: 1,
 };
 
-// Функция фильтрации и сортировки данных
+// Функция фильтрации, поиска, пагинации и сортировки данных
 export const filterSlice = createSlice({
   name: "filter",
   initialState: initialState,
   reducers: {
-      // фильтрация
+    // фильтрация
     setCategoryId(state, action) {
       state.categoryId = action.payload;
     },
     // сортировка
     setSort(state, action) {
-        state.sort = action.payload
+      state.sort = action.payload;
     },
+    // Поиск
     setSearch(state, action) {
-        console.log(action)
-        state.searchPizza = action.payload
+      state.search = action.payload;
+    },
+    // Пагинация
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+    // Кладу в редакс значения с ссылки
+    setFilters(state, action) {
+      state.search = action.payload.search;
+      state.sort = action.payload.sort;
+      state.categoryId = Number(action.payload.categoryId);
+      state.currentPage = Number(action.payload.currentPage);
     },
   },
 });
 
 // Вытакскиваю методы из filterSlice
-export const { setCategoryId, setSort, setSearch } = filterSlice.actions;
+export const { setCategoryId, setSort, setSearch, setFilters, setCurrentPage } =
+  filterSlice.actions;
 
 export default filterSlice.reducer;

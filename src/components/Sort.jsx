@@ -2,13 +2,14 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../redux/slices/filterSlice";
 
-function Sort() {
-  const listSort = [
-    { name: "от самой популярной", sort: "rating" },
-    { name: "от самой дорогой", sort: "price" },
-    { name: "от самой дешёвой", sort: "-price" },
-    { name: "алфавиту", sort: "title" },
-  ];
+export const listSort = [
+  { name: "от самой популярной", sortProperty: "rating" },
+  { name: "от самой дорогой", sortProperty: "price" },
+  { name: "от самой дешёвой", sortProperty: "-price" },
+  { name: "алфавиту", sortProperty: "title" },
+];
+
+export const Sort = () => {
   const [openPopup, setOpenPopup] = React.useState(false);
   const { sort } = useSelector((state) => state.filterReducer);
 
@@ -43,7 +44,7 @@ function Sort() {
           <ul>
             {listSort.map((obj, index) => (
               <li
-                className={sort.sort === obj.sort ? "active" : ""}
+                className={sort.sortProperty === obj.sortProperty ? "active" : ""}
                 onClick={() => handleSortItems(obj)}
                 key={`${obj.name}+${index}`}
               >
@@ -56,5 +57,3 @@ function Sort() {
     </div>
   );
 }
-
-export default Sort;
