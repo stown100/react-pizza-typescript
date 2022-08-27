@@ -14,15 +14,14 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
+import { fetchPizzas } from "./redux/slices/pizzasSlice";
 
 function App() {
   // Начальный стейт из редакса
   const { categoryId, sort, currentPage, search } = useSelector(
     (state) => state.filterReducer
   );
-
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const { items, isLoading } = useSelector((state) => state.pizzasSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -50,34 +49,43 @@ function App() {
   }, []);
 
   // Беру данные с сервера
-  React.useEffect(() => {
-    // При рендере компонента - перекидывает сразу наверх страницы
-    window.scrollTo(0, 0);
-    if (!isSearch.current) {
-      setIsLoading(true);
-      // Все дополнения к ссылке в документации mockapi
-      // Если catIndex больше 0, то в категории засовываю catIndex
-      const categories = categoryId > 0 ? `category=${categoryId}` : "";
-      // Убираю минус в канечной ссылке
-      const sortBy = sort.sortProperty.replace("-", "");
-      // Если в ссылке есть - то сортировка по возрастанию, если нет - по убыванию.
-      const order = sort.sortProperty.includes("-") ? "asc" : "desc";
-      // Поиск на бэкенде
-      const searchPizza = search ? `&search=${search}` : "";
-      axios
-        .get(
-          `https://628c1a08a3fd714fd02cbd66.mockapi.io/items?page=${currentPage}&limit=4&${categories}&sortBy=${sortBy}&order=${order}${searchPizza}`
-        )
-        .then((res) => {
-          setItems(res.data);
-          setIsLoading(false);
-        });
-    }
-    isSearch.current = false;
-  }, [categoryId, sort, search, currentPage]);
+  // React.useEffect(() => {
+  //   // При рендере компонента - перекидывает сразу наверх страницы
+  //   window.scrollTo(0, 0);
+  //   if (!isSearch.current) {
+
+  //   }
+  //   isSearch.current = false;
+  // }, [categoryId, sort, search, currentPage]);
+
+  const getPizzas = async () => {
+    // setIsLoading(true);
+    // Все дополнения к ссылке в документации mockapi
+    // Если catIndex больше 0, то в категории засовываю catIndex
+    const categories = categoryId > 0 ? `category=${categoryId}` : "";
+    // Убираю минус в канечной ссылке
+    const sortBy = sort.sortProperty.replace("-", "");
+    // Если в ссылке есть - то сортировка по возрастанию, если нет - по убыванию.
+    const order = sort.sortProperty.includes("-") ? "asc" : "desc";
+    // Поиск на бэкенде
+    const searchPizza = search ? `&search=${search}` : "";
+    dispatch(
+      fetchPizzas({
+        currentPage,
+        categories,
+        sortBy,
+        order,
+        searchPizza,
+      })
+    );
+  };
 
   React.useEffect(() => {
     // ПОСЛЕ первого рендера вкладываю (из редакса) значения в ссылку
+    window.scrollTo(0, 0);
+    if (!isSearch.current) {
+      getPizzas();
+    }
     if (isMounted.current) {
       const queryString = qs.stringify({
         sortProperty: sort.sortProperty,
@@ -90,6 +98,7 @@ function App() {
     }
     // После первого рендера ставлю значение true и после этого можно будет вложить данные в ссылку
     isMounted.current = true;
+    isSearch.current = false;
   }, [categoryId, sort, search, currentPage, navigate]);
 
   // Поиск по пиццам (способ поиска на фронтенде)

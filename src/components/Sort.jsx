@@ -10,6 +10,7 @@ export const listSort = [
 ];
 
 export const Sort = () => {
+  const sortRef = React.useRef();
   const [openPopup, setOpenPopup] = React.useState(false);
   const { sort } = useSelector((state) => state.filterReducer);
 
@@ -21,8 +22,21 @@ export const Sort = () => {
     setOpenPopup(!openPopup);
   };
 
+  // Закрытие попапа по оверлею
+  const closeSortPopupWithOverlay = (e) => {
+    const path = e.path || (e.composedPath && e.composedPath()) || e.composedPath(e.target);
+    if (!path.includes(sortRef.current)) {
+      setOpenPopup(false);
+    }
+  }
+  React.useEffect(() => {
+    document.body.addEventListener('click', closeSortPopupWithOverlay);
+    // Удаляю событие при переходе на другую страницу, чтоб функция не отрабатывала лишний раз
+    return () => document.body.removeEventListener('click', closeSortPopupWithOverlay);
+  }, []);
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
