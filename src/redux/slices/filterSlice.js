@@ -42,6 +42,9 @@ export const filterSlice = createSlice({
   },
 });
 
+// Селекторы в редаксе - обычные функции чтоб не дублировать код, а импортировать функцию
+export const selectSort = (state) => state.filterReducer
+
 // Вытакскиваю методы из filterSlice
 export const { setCategoryId, setSort, setSearch, setFilters, setCurrentPage } =
   filterSlice.actions;

@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import logo from "../assets/img/pizza-logo.svg";
 import Search from "./Search";
 import { useSelector } from "react-redux"
+import { selectCart } from "../redux/slices/cartSlice";
 
-function Header() {
+const Header: React.FC = () => {
   // Сумма и коллицество пицц в корзине берётся из редакса (cartSlice)
-  const { items, totalPrice } = useSelector(state => state.cartSlice);
+  const { totalPrice, items } = useSelector(selectCart);
   // Колличество добавленных пицц
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0)
   return (
     <div className="header">
       <div className="container">

@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearch } from "../../redux/slices/filterSlice";
+import { selectSort, setSearch } from "../../redux/slices/filterSlice";
 import style from "./Search.module.scss";
 
 function Search() {
-  const { search } = useSelector((state) => state.filterReducer);
+  const { search } = useSelector(selectSort);
   const dispatch = useDispatch();
   
   return (

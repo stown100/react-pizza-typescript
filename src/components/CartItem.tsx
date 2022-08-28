@@ -2,7 +2,17 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { addItem, minusItem, removeItem } from "../redux/slices/cartSlice";
 
-export const CartItem = ({ id, title, type, size, price, count, imageUrl }) => {
+type CartItemProps = {
+  count: number,
+  id: number,
+  imageUrl: string,
+  price: number,
+  size: number,
+  title: string,
+  type: string,
+};
+
+export const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count, imageUrl }) => {
   const dispatch = useDispatch();
 
   // Добавление пиццы на плюс
@@ -26,7 +36,6 @@ export const CartItem = ({ id, title, type, size, price, count, imageUrl }) => {
     }
   };
 
-
   return (
     <>
       <div className="cart__item">
@@ -35,7 +44,9 @@ export const CartItem = ({ id, title, type, size, price, count, imageUrl }) => {
         </div>
         <div className="cart__item-info">
           <h3>{title}</h3>
-          <p>{type}, {size} см.</p>
+          <p>
+            {type}, {size} см.
+          </p>
         </div>
         <div className="cart__item-count">
           <div

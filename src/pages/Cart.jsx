@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../components/CartItem";
-import { clearItems } from "../redux/slices/cartSlice";
+import { clearItems, selectCart } from "../redux/slices/cartSlice";
 import CartEmpty from "../components/CartEmpty";
 
 function Cart() {
-  const { totalPrice, items } = useSelector((state) => state.cartSlice);
+  const { totalPrice, items } = useSelector(selectCart);
   // Колличество добавленных пицц
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function Cart() {
   };
 
   if (!totalPrice) {
-    return <CartEmpty />
+    return <CartEmpty />;
   }
 
   return (
@@ -99,7 +99,7 @@ function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item) => {
+          {items.map((item, index) => {
             return <CartItem key={item.id} {...item} />;
           })}
         </div>

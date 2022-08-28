@@ -27,7 +27,7 @@ export const pizzasSlice = createSlice({
       state.items = action.payload;
     },
   },
-  // в экроредюсеры отправляют ассинхронные запросы
+  // в экроредюсеры отправляют ассинхронные запросы/ Связанно с createAsyncThunk
   extraReducers: {
     [fetchPizzas.pending]: (state, action) => {
       state.isLoading = "Loading";
@@ -43,6 +43,8 @@ export const pizzasSlice = createSlice({
     },
   },
 });
+
+export const selectPizza = (state) => state.pizzasSlice
 
 // Вытакскиваю методы из filterSlice
 export const { setItems } = pizzasSlice.actions;

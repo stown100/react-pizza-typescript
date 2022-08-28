@@ -24,12 +24,20 @@ function Home({ items, isLoading }) {
               <p>Вероятней всего, ошибка на сервере. Повторите попытку позже</p>
             </div>
           </div>
+        ) : isLoading === "success" && items.length === 0 ? (
+          <div className="container container--cart">
+            <div className="cart cart--empty">
+              <h2>
+                Такой пиццы у нас нет <icon>😕</icon>
+              </h2>
+              <p>Но есть лучше, полистайте каталог</p>
+            </div>
+          </div>
+        ) : isLoading === "Loading" ? (
+          [...new Array(12)].map(() => <Preloader key={Math.random()} />)
         ) : (
-          items.map((obj) => <PizzaBlock {...obj} key={obj.id} />)
+          items.map((obj, index) => <PizzaBlock {...obj} key={obj.id} />)
         )}
-        {isLoading === "Loading"
-          ? [...new Array(12)].map(() => <Preloader key={Math.random()} />)
-          : items.map((obj) => <PizzaBlock {...obj} key={obj.id} />)}
       </div>
       <Pagination />
     </div>

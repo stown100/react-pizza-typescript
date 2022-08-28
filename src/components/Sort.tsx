@@ -1,38 +1,44 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSort } from "../redux/slices/filterSlice";
+import { selectSort, setSort } from "../redux/slices/filterSlice";
 
-export const listSort = [
+type SortItem = { name: string; sortProperty: string };
+export const listSort: SortItem[] = [
   { name: "от самой популярной", sortProperty: "rating" },
   { name: "от самой дорогой", sortProperty: "price" },
   { name: "от самой дешёвой", sortProperty: "-price" },
   { name: "алфавиту", sortProperty: "title" },
 ];
 
-export const Sort = () => {
-  const sortRef = React.useRef();
-  const [openPopup, setOpenPopup] = React.useState(false);
-  const { sort } = useSelector((state) => state.filterReducer);
+export const Sort: React.FC = () => {
+  // HTMLDivElement - тип можно узнать при наведении на html елемент, там где используется ref!
+  const sortRef = React.useRef<HTMLDivElement>(null);
+  const [openPopup, setOpenPopup] = React.useState<Boolean>(false);
+  const { sort } = useSelector(selectSort);
 
   const dispatch = useDispatch();
 
   // Функция сортировки
-  const handleSortItems = (obj) => {
+  const handleSortItems = (obj: SortItem) => {
     dispatch(setSort(obj));
     setOpenPopup(!openPopup);
   };
 
   // Закрытие попапа по оверлею
-  const closeSortPopupWithOverlay = (e) => {
-    const path = e.path || (e.composedPath && e.composedPath()) || e.composedPath(e.target);
+  const closeSortPopupWithOverlay = (e: any) => {
+    const path =
+      e.path ||
+      (e.composedPath && e.composedPath()) ||
+      e.composedPath(e.target);
     if (!path.includes(sortRef.current)) {
       setOpenPopup(false);
     }
-  }
+  };
   React.useEffect(() => {
-    document.body.addEventListener('click', closeSortPopupWithOverlay);
+    document.body.addEventListener("click", closeSortPopupWithOverlay);
     // Удаляю событие при переходе на другую страницу, чтоб функция не отрабатывала лишний раз
-    return () => document.body.removeEventListener('click', closeSortPopupWithOverlay);
+    return () =>
+      document.body.removeEventListener("click", closeSortPopupWithOverlay);
   }, []);
 
   return (
@@ -58,7 +64,9 @@ export const Sort = () => {
           <ul>
             {listSort.map((obj, index) => (
               <li
-                className={sort.sortProperty === obj.sortProperty ? "active" : ""}
+                className={
+                  sort.sortProperty === obj.sortProperty ? "active" : ""
+                }
                 onClick={() => handleSortItems(obj)}
                 key={`${obj.name}+${index}`}
               >
@@ -70,4 +78,4 @@ export const Sort = () => {
       )}
     </div>
   );
-}
+};

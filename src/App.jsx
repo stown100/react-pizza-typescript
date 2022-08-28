@@ -1,27 +1,35 @@
 import "./App.css";
 import "./scss/app.scss";
-import axios from "axios";
-import React from "react";
+import React, { Dispatch } from "react";
 // библиотека, для вшития в ссылку данных
 import qs from "qs";
 import { useSelector } from "react-redux";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setFilters } from "./redux/slices/filterSlice";
+import { selectSort, setFilters } from "./redux/slices/filterSlice";
 
 import { listSort } from "./components/Sort";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
-import { fetchPizzas } from "./redux/slices/pizzasSlice";
+import { fetchPizzas, selectPizza } from "./redux/slices/pizzasSlice";
 
-function App() {
+// type SortItem = {
+//   categoryId: number;
+//   sort: {
+//     name: string;
+//     sortProperty: string;
+//   };
+//   currentPage: number;
+//   search: string;
+// };
+
+const App = () => {
   // Начальный стейт из редакса
-  const { categoryId, sort, currentPage, search } = useSelector(
-    (state) => state.filterReducer
-  );
-  const { items, isLoading } = useSelector((state) => state.pizzasSlice);
+  const { categoryId, sort, currentPage, search } = useSelector(selectSort);
+  // console.log({ categoryId, sort, currentPage, search })
+  const { items, isLoading } = useSelector(selectPizza);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -48,16 +56,7 @@ function App() {
     }
   }, []);
 
-  // Беру данные с сервера
-  // React.useEffect(() => {
-  //   // При рендере компонента - перекидывает сразу наверх страницы
-  //   window.scrollTo(0, 0);
-  //   if (!isSearch.current) {
-
-  //   }
-  //   isSearch.current = false;
-  // }, [categoryId, sort, search, currentPage]);
-
+  // Беру данные из редакса с помощью диспатча
   const getPizzas = async () => {
     // setIsLoading(true);
     // Все дополнения к ссылке в документации mockapi
@@ -125,6 +124,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
