@@ -5,7 +5,9 @@ import PizzaBlock from "../components/PizzaBlock";
 import Preloader from "../components/Preloader/Preloader";
 import Pagination from "../components/Pagination";
 
-function Home({ items, isLoading }) {
+type HomeProps = { items: any; isLoading: string };
+
+const Home: React.FC<HomeProps> = ({ items, isLoading }) => {
   return (
     <div className="container">
       <div className="content__top">
@@ -19,7 +21,7 @@ function Home({ items, isLoading }) {
           <div className="container container--cart">
             <div className="cart cart--empty">
               <h2>
-                Пиццы не загрузились <icon>😕</icon>
+                Пиццы не загрузились <span>😕</span>
               </h2>
               <p>Вероятней всего, ошибка на сервере. Повторите попытку позже</p>
             </div>
@@ -28,7 +30,7 @@ function Home({ items, isLoading }) {
           <div className="container container--cart">
             <div className="cart cart--empty">
               <h2>
-                Такой пиццы у нас нет <icon>😕</icon>
+                Такой пиццы у нас нет <span>😕</span>
               </h2>
               <p>Но есть лучше, полистайте каталог</p>
             </div>
@@ -36,12 +38,12 @@ function Home({ items, isLoading }) {
         ) : isLoading === "Loading" ? (
           [...new Array(12)].map(() => <Preloader key={Math.random()} />)
         ) : (
-          items.map((obj, index) => <PizzaBlock {...obj} key={obj.id} />)
+          items.map((obj: any, index: number) => <PizzaBlock {...obj} key={obj.id} />)
         )}
       </div>
       <Pagination />
     </div>
   );
-}
+};
 
 export default Home;

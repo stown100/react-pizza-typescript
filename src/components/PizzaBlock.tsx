@@ -6,7 +6,18 @@ import {
 } from "../redux/slices/cartSlice";
 import Modal from "./Modal";
 
-function PizzaBlock({
+type pizzaBlockProps = {
+  id: number,
+  imageUrl: string,
+  title: string,
+  types: number[],
+  sizes: number[],
+  prices: number[],
+  category: number,
+  rating: number,
+}
+
+const PizzaBlock: React.FC<pizzaBlockProps> = ({
   id,
   imageUrl,
   title,
@@ -15,7 +26,7 @@ function PizzaBlock({
   prices,
   category,
   rating,
-}) {
+}) => {
   const typesNames = ["Тонкое", "Традиционное"];
 
   const [activeType, setActiveType] = React.useState(0);
@@ -40,17 +51,17 @@ function PizzaBlock({
   };
 
   // Выбор типа пиццы
-  const onClickType = (index) => {
+  const onClickType = (index: number) => {
     setActiveType(index);
   };
   // Выбор размера пиццы
-  const onClickSize = (index) => {
+  const onClickSize = (index: number) => {
     setActiveSize(index);
   };
 
   // Закрытие попапа по ESC
   React.useEffect(() => {
-    const closeByEscape = (e) => {
+    const closeByEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setModal(false);
       }
@@ -129,7 +140,6 @@ function PizzaBlock({
         modalState={modal}
         title={title}
         imageUrl={imageUrl}
-        id={id}
         types={types}
         sizes={sizes}
         prices={prices}

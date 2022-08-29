@@ -5,17 +5,17 @@ type ModalProps = {
   imageUrl: string;
   title: string;
   modalState: boolean;
-  setModalState: any;
+  setModalState: (i: boolean) => void;
   types: number[];
   activeType: number;
-  onClickType: any;
+  onClickType: (i: number) => void;
   typesNames: string[];
   sizes: number[];
-  onClickSize: any;
+  onClickSize: (i: number) => void;
   activeSize: number;
   prices: number[];
   addedCount: number;
-  onClickAddPizza: any;
+  onClickAddPizza: () => void;
 };
 const Modal: React.FC<ModalProps> = ({
   imageUrl,

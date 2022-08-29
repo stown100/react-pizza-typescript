@@ -5,10 +5,10 @@ import { CartItem } from "../components/CartItem";
 import { clearItems, selectCart } from "../redux/slices/cartSlice";
 import CartEmpty from "../components/CartEmpty";
 
-function Cart() {
+const Cart: React.FC = () => {
   const { totalPrice, items } = useSelector(selectCart);
   // Колличество добавленных пицц
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
   const dispatch = useDispatch();
 
   const onClickClear = () => {
@@ -99,7 +99,7 @@ function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item, index) => {
+          {items.map((item: any) => {
             return <CartItem key={item.id} {...item} />;
           })}
         </div>

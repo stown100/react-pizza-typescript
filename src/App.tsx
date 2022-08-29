@@ -25,7 +25,7 @@ import { fetchPizzas, selectPizza } from "./redux/slices/pizzasSlice";
 //   search: string;
 // };
 
-const App = () => {
+const App: React.FC = () => {
   // Начальный стейт из редакса
   const { categoryId, sort, currentPage, search } = useSelector(selectSort);
   // console.log({ categoryId, sort, currentPage, search })
@@ -69,6 +69,7 @@ const App = () => {
     // Поиск на бэкенде
     const searchPizza = search ? `&search=${search}` : "";
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         currentPage,
         categories,

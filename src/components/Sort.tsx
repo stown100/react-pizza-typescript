@@ -9,6 +9,9 @@ export const listSort: SortItem[] = [
   { name: "от самой дешёвой", sortProperty: "-price" },
   { name: "алфавиту", sortProperty: "title" },
 ];
+type PopupClick = MouseEvent & {
+  path: Node[];
+}
 
 export const Sort: React.FC = () => {
   // HTMLDivElement - тип можно узнать при наведении на html елемент, там где используется ref!
@@ -25,12 +28,14 @@ export const Sort: React.FC = () => {
   };
 
   // Закрытие попапа по оверлею
-  const closeSortPopupWithOverlay = (e: any) => {
-    const path =
-      e.path ||
-      (e.composedPath && e.composedPath()) ||
-      e.composedPath(e.target);
-    if (!path.includes(sortRef.current)) {
+  const closeSortPopupWithOverlay = (e: MouseEvent) => {
+    // Кастомно типизирую событие event
+    const _event = e as PopupClick;
+    // const path =
+    //   e.path ||
+    //   (e.composedPath && e.composedPath()) ||
+    //   e.composedPath(e.target);
+    if (sortRef.current && !_event.path.includes(sortRef.current)) {
       setOpenPopup(false);
     }
   };

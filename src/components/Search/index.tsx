@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSearch } from "../../redux/slices/filterSlice";
 import style from "./Search.module.scss";
 
-function Search() {
+const Search: React.FC = () => {
   const { search } = useSelector(selectSort);
   const dispatch = useDispatch();
   
