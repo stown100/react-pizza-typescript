@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addItem,
+  CartItem,
   selectCartItemById,
 } from "../redux/slices/cartSlice";
 import Modal from "./Modal";
@@ -39,13 +40,14 @@ const PizzaBlock: React.FC<pizzaBlockProps> = ({
   const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAddPizza = () => {
-    const item = {
+    const item: CartItem = {
       id,
       title,
       price: prices[activeSize],
       imageUrl,
       type: typesNames[activeType],
       size: sizes[activeSize],
+      count: 0
     };
     dispatch(addItem(item));
   };
